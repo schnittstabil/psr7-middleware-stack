@@ -15,7 +15,8 @@ $ composer require schnittstabil/psr7-middleware-stack
 ## Usage
 
 ```php
-use Schnittstabil\Psr7\Middleware\ImmutableStaclewareStack;
+<?php
+use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
 $appMiddlewares = MiddlewareStack::create()
   ->add($someMiddleware4)
@@ -27,7 +28,7 @@ $appMiddlewares = MiddlewareStack::create()
     }
   )
   ->add($someMiddleware1);
-
+?>
 ```
 
 
