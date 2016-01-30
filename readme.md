@@ -1,4 +1,4 @@
-# Psr7\Middleware\Stack [![Build Status](https://travis-ci.org/schnittstabil/psr7-middleware-stack.svg?branch=master)](https://travis-ci.org/schnittstabil/psr7-middleware-stack) [![Coverage Status](https://coveralls.io/repos/github/schnittstabil/psr7-middleware-stack/badge.svg?branch=master)](https://coveralls.io/github/schnittstabil/psr7-middleware-stack?branch=master) [![Code Climate](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack/badges/gpa.svg)](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack)
+# Psr7\Middleware\Stack [![Build Status](https://travis-ci.org/schnittstabil/psr7-middleware-stack.svg?branch=master)](https://travis-ci.org/schnittstabil/psr7-middleware-stack) [![Coverage Status](https://coveralls.io/repos/github/schnittstabil/psr7-middleware-stack/badge.svg?branch=master)](https://coveralls.io/github/schnittstabil/psr7-middleware-stack?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/?branch=master) [![Code Climate](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack/badges/gpa.svg)](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/f82b6d49-fa8c-45a1-8d27-e02569fb4dab/big.png)](https://insight.sensiolabs.com/projects/f82b6d49-fa8c-45a1-8d27-e02569fb4dab)
 
@@ -15,7 +15,7 @@ $ composer require schnittstabil/psr7-middleware-stack
 ## Usage
 
 ```php
-use Schnittstabil\Psr7\Middleware\ImmutableStack as MiddlewareStack;
+use Schnittstabil\Psr7\Middleware\ImmutableStaclewareStack;
 
 $appMiddlewares = MiddlewareStack::create()
   ->add($someMiddleware4)
@@ -55,7 +55,7 @@ require __DIR__.'/vendor/autoload.php';
 use Slim\App;
 use Slim\Http\Stream;
 use Psr7Middlewares\Middleware;
-use Schnittstabil\Psr7\Middleware\ImmutableStack as MiddlewareStack;
+use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
 // setup oscarotero/psr7-middlewares
 Middleware::setStreamFactory(function ($file, $mode) {

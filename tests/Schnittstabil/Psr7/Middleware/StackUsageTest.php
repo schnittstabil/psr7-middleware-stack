@@ -7,12 +7,12 @@ use Psr\Http\Message\RequestInterface;
 use Slim\App;
 use Slim\Http\Stream;
 use Psr7Middlewares\Middleware;
-use Schnittstabil\Psr7\Middleware\ImmutableStack as MiddlewareStack;
+use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
 /**
- * ImmutableStack Usage Tests.
+ * Stack Usage Tests.
  */
-class ImmutableStackUsageTest extends \PHPUnit_Framework_TestCase
+class StackUsageTest extends \PHPUnit_Framework_TestCase
 {
     public function requestFactory($method = 'GET', $scriptName = '/index.php', $uri = '/')
     {

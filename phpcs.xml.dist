@@ -23,9 +23,9 @@
 
   <!-- usage tests -->
   <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
-    <exclude-pattern>*/ImmutableStackUsageTest.php</exclude-pattern>
+    <exclude-pattern>*/StackUsageTest.php</exclude-pattern>
   </rule>
   <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
-    <exclude-pattern>*/ImmutableStackUsageTest.php</exclude-pattern>
+    <exclude-pattern>*/StackUsageTest.php</exclude-pattern>
   </rule>
 </ruleset>

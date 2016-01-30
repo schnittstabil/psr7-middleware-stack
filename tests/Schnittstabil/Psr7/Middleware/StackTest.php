@@ -7,9 +7,9 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * MutableStack Tests.
+ * Stack Tests.
  */
-class MutableStackTest extends \PHPUnit_Framework_TestCase
+class StackTest extends \PHPUnit_Framework_TestCase
 {
     protected static $bounce;
 
@@ -25,11 +25,11 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         self::$bounce = null;
     }
 
-    public function testEmptyMutableStackShouldBeMiddleware()
+    public function testEmptyStackShouldBeMiddleware()
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = MutableStack::create();
+        $sut = Stack::create();
 
         $reqDummy = $this->getMock(RequestInterface::class);
         $resDummy = $this->getMock(ResponseInterface::class);
@@ -40,11 +40,11 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $sut($reqDummy, $resDummy, $next));
     }
 
-    public function testMutableStackShouldBeMiddleware()
+    public function testStackShouldBeMiddleware()
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = MutableStack::create()->add(
+        $sut = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) use ($expected) {
                 return $expected;
             }
@@ -58,9 +58,9 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $sut($reqDummy, $resDummy, $nextDummy));
     }
 
-    public function testMutableStackShouldRespectOrder()
+    public function testStackShouldRespectOrder()
     {
-        $sut = MutableStack::create()->add(
+        $sut = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -99,9 +99,9 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($res, $sut($req, $res, self::$bounce));
     }
 
-    public function testMutableStackShouldBeStackable()
+    public function testStackShouldBeStackable()
     {
-        $trd = MutableStack::create()->add(
+        $trd = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -109,7 +109,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = MutableStack::create()->add(
+        $snd = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -117,7 +117,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = MutableStack::create()->add(
+        $fst = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -125,7 +125,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = MutableStack::create()
+        $sut = Stack::create()
             ->add($trd)
             ->add($snd)
             ->add($fst);
@@ -149,9 +149,9 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($res, $sut($req, $res, self::$bounce));
     }
 
-    public function testMutableStackShouldBeMutable()
+    public function testStackShouldBeImmutable()
     {
-        $trd = MutableStack::create()->add(
+        $trd = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -159,7 +159,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = MutableStack::create()->add(
+        $snd = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -167,7 +167,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = MutableStack::create()->add(
+        $fst = Stack::create()->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -175,7 +175,7 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = MutableStack::create()->add($trd)->add($snd);
+        $sut = Stack::create()->add($trd)->add($snd);
 
         $sut->add($fst);
 
@@ -183,14 +183,13 @@ class MutableStackTest extends \PHPUnit_Framework_TestCase
         $res = $this->getMock(ResponseInterface::class);
         $stream = $this->getMockForAbstractClass(StreamInterface::class);
 
-        $res->expects($this->exactly(3))
+        $res->expects($this->exactly(2))
             ->method('getBody')
             ->willReturn($stream);
 
-        $stream->expects($this->exactly(3))
+        $stream->expects($this->exactly(2))
             ->method('write')
             ->withConsecutive(
-                array($this->equalTo('1st')),
                 array($this->equalTo('2nd')),
                 array($this->equalTo('3rd'))
             );

@@ -2,31 +2,46 @@
 
 namespace Schnittstabil\Psr7\Middleware;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
-
 /**
- * Middleware stack.
+ * Immutable middleware stack.
  */
-interface Stack
+class Stack implements StackInterface
 {
+    use CallableStackTrait;
+
     /**
-     * Push a middleware onto the top of this stack.
+     * Create new stack.
+     *
+     * @param callable $bottomMiddleware last middleware to be called
+     */
+    public function __construct(callable $bottomMiddleware = null)
+    {
+        $this->middlewareStack = $bottomMiddleware;
+    }
+
+    /**
+     * Push a middleware onto the top of a new Stack instance.
      *
      * @param callable $newTopMiddleware the middleware to be pushed onto the top.
      *
-     * @return static
+     * @return static the new instance
      */
-    public function add(callable $newTopMiddleware);
+    public function add(callable $newTopMiddleware)
+    {
+        $clone = clone $this;
+
+        return $clone->push($newTopMiddleware);
+    }
 
     /**
-     * Invoke stacked middlewares.
+     * Create new stack.
      *
-     * @param RequestInterface|mixed  $request  request object
-     * @param ResponseInterface|mixed $response response object
-     * @param callable                $next     next middleware
+     * @param callable $bottomMiddleware last middleware to be called
      *
-     * @return ResponseInterface PSR7 response object
+     * @return static a new stack instance
      */
-    public function __invoke($request, $response, callable $next);
+    public static function create(callable $bottomMiddleware = null)
+    {
+        return new self($bottomMiddleware);
+    }
 }
