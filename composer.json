@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Stack PSR-7 middlewares in a reusable way.",
     "license": "MIT",
-    "keywords": [ "middleware", "stack", "psr", "psr7", "psr-7" ],
+    "keywords": [ "middleware", "stack", "psr", "psr7", "psr-7", "slim", "expressive", "stratigility" ],
     "homepage": "https://github.com/schnittstabil/psr7-middleware-stack",
     "authors": [
         {
