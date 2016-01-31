@@ -2,11 +2,11 @@
 
 namespace Schnittstabil\Psr7\Middleware;
 
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr7Middlewares\Middleware;
 use Slim\App;
 use Slim\Http\Stream;
-use Psr7Middlewares\Middleware;
 use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
 /**

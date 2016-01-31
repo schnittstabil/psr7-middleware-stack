@@ -16,9 +16,11 @@ $ composer require schnittstabil/psr7-middleware-stack
 
 ```php
 <?php
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
-$appMiddlewares = MiddlewareStack::create()
+$newMiddleware = MiddlewareStack::create()
   ->add($someMiddleware4)
   ->add($someMiddleware3)
   ->add(
@@ -53,9 +55,11 @@ $ composer require willdurand/negotiation
 <?php
 require __DIR__.'/vendor/autoload.php';
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr7Middlewares\Middleware;
 use Slim\App;
 use Slim\Http\Stream;
-use Psr7Middlewares\Middleware;
 use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
 // setup oscarotero/psr7-middlewares
