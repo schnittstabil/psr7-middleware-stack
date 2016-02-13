@@ -32,16 +32,4 @@ class Stack implements StackInterface
 
         return $clone->push($newTopMiddleware);
     }
-
-    /**
-     * Create new stack.
-     *
-     * @param callable $bottomMiddleware last middleware to be called
-     *
-     * @return static a new stack instance
-     */
-    public static function create(callable $bottomMiddleware = null)
-    {
-        return new self($bottomMiddleware);
-    }
 }

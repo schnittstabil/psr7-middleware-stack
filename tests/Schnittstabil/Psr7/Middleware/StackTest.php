@@ -29,7 +29,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = Stack::create();
+        $sut = (new Stack());
 
         $reqDummy = $this->getMock(RequestInterface::class);
         $resDummy = $this->getMock(ResponseInterface::class);
@@ -44,7 +44,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = Stack::create()->add(
+        $sut = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) use ($expected) {
                 return $expected;
             }
@@ -60,7 +60,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
 
     public function testStackShouldRespectOrder()
     {
-        $sut = Stack::create()->add(
+        $sut = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -101,7 +101,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
 
     public function testStackShouldBeStackable()
     {
-        $trd = Stack::create()->add(
+        $trd = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -109,7 +109,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = Stack::create()->add(
+        $snd = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -117,7 +117,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = Stack::create()->add(
+        $fst = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -125,7 +125,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = Stack::create()
+        $sut = (new Stack())
             ->add($trd)
             ->add($snd)
             ->add($fst);
@@ -151,7 +151,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
 
     public function testStackShouldBeImmutable()
     {
-        $trd = Stack::create()->add(
+        $trd = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -159,7 +159,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = Stack::create()->add(
+        $snd = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -167,7 +167,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = Stack::create()->add(
+        $fst = (new Stack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -175,7 +175,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = Stack::create()->add($trd)->add($snd);
+        $sut = (new Stack())->add($trd)->add($snd);
 
         $sut->add($fst);
 

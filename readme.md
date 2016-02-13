@@ -20,7 +20,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
 
-$newMiddleware = MiddlewareStack::create()
+$newMiddleware = (new MiddlewareStack())
   ->add($someMiddleware4)
   ->add($someMiddleware3)
   ->add(
@@ -70,7 +70,7 @@ Middleware::setStreamFactory(function ($file, $mode) {
 $app = new App();
 
 $app->getContainer()['minifyMiddleware'] = function ($c) {
-    return MiddlewareStack::create()
+    return (new MiddlewareStack())
         ->add(Middleware::Minify())
         ->add(Middleware::FormatNegotiator());
 };

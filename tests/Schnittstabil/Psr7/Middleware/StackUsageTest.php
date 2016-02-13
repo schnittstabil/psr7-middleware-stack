@@ -57,7 +57,7 @@ class StackUsageTest extends \PHPUnit_Framework_TestCase
         $app = new App();
 
         $app->getContainer()['minifyMiddleware'] = function ($c) {
-            return MiddlewareStack::create()
+            return (new MiddlewareStack())
                 ->add(Middleware::Minify())
                 ->add(Middleware::FormatNegotiator());
         };
