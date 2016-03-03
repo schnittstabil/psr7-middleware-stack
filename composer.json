@@ -26,7 +26,5 @@
         "mrclay/minify": "^2.2",
         "willdurand/negotiation": "^2.0",
         "oscarotero/psr7-middlewares": "^3.12"
-    },
-    "require": {
     }
 }
