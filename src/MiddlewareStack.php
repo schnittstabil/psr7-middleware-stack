@@ -1,13 +1,13 @@
 <?php
 
-namespace Schnittstabil\Psr7\Middleware;
+namespace Schnittstabil\Psr7\MiddlewareStack;
 
 /**
  * Immutable middleware stack.
  */
-class Stack implements StackInterface
+class MiddlewareStack implements MiddlewareStackInterface
 {
-    use CallableStackTrait;
+    use CallableMiddlewareStackTrait;
 
     /**
      * Create new stack.

@@ -1,15 +1,12 @@
 <?php
 
-namespace Schnittstabil\Psr7\Middleware;
+namespace Schnittstabil\Psr7\MiddlewareStack;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
-/**
- * Stack Tests.
- */
-class StackTest extends \PHPUnit_Framework_TestCase
+class MiddlewareStackTest extends \PHPUnit_Framework_TestCase
 {
     protected static $bounce;
 
@@ -25,11 +22,11 @@ class StackTest extends \PHPUnit_Framework_TestCase
         self::$bounce = null;
     }
 
-    public function testEmptyStackShouldBeMiddleware()
+    public function testEmptyMiddlewareStackShouldBeMiddleware()
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = (new Stack());
+        $sut = (new MiddlewareStack());
 
         $reqDummy = $this->getMock(RequestInterface::class);
         $resDummy = $this->getMock(ResponseInterface::class);
@@ -40,11 +37,11 @@ class StackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $sut($reqDummy, $resDummy, $next));
     }
 
-    public function testStackShouldBeMiddleware()
+    public function testMiddlewareStackShouldBeMiddleware()
     {
         $expected = $this->getMock(ResponseInterface::class);
 
-        $sut = (new Stack())->add(
+        $sut = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) use ($expected) {
                 return $expected;
             }
@@ -58,9 +55,9 @@ class StackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $sut($reqDummy, $resDummy, $nextDummy));
     }
 
-    public function testStackShouldRespectOrder()
+    public function testMiddlewareStackShouldRespectOrder()
     {
-        $sut = (new Stack())->add(
+        $sut = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -99,9 +96,9 @@ class StackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($res, $sut($req, $res, self::$bounce));
     }
 
-    public function testStackShouldBeStackable()
+    public function testMiddlewareStackShouldBeStackable()
     {
-        $trd = (new Stack())->add(
+        $trd = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -109,7 +106,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = (new Stack())->add(
+        $snd = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -117,7 +114,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = (new Stack())->add(
+        $fst = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -125,7 +122,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = (new Stack())
+        $sut = (new MiddlewareStack())
             ->add($trd)
             ->add($snd)
             ->add($fst);
@@ -149,9 +146,9 @@ class StackTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($res, $sut($req, $res, self::$bounce));
     }
 
-    public function testStackShouldBeImmutable()
+    public function testMiddlewareStackShouldBeImmutable()
     {
-        $trd = (new Stack())->add(
+        $trd = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('3rd');
 
@@ -159,7 +156,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $snd = (new Stack())->add(
+        $snd = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('2nd');
 
@@ -167,7 +164,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $fst = (new Stack())->add(
+        $fst = (new MiddlewareStack())->add(
             function (RequestInterface $request, ResponseInterface $response, callable $next) {
                 $response->getBody()->write('1st');
 
@@ -175,7 +172,7 @@ class StackTest extends \PHPUnit_Framework_TestCase
             }
         );
 
-        $sut = (new Stack())->add($trd)->add($snd);
+        $sut = (new MiddlewareStack())->add($trd)->add($snd);
 
         $sut->add($fst);
 

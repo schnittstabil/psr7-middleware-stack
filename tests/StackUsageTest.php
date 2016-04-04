@@ -7,11 +7,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr7Middlewares\Middleware;
 use Slim\App;
 use Slim\Http\Stream;
-use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
+use Schnittstabil\Psr7\MiddlewareStack\MiddlewareStack;
 
-/**
- * Stack Usage Tests.
- */
 class StackUsageTest extends \PHPUnit_Framework_TestCase
 {
     public function requestFactory($method = 'GET', $scriptName = '/index.php', $uri = '/')

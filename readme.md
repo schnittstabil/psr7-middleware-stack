@@ -1,8 +1,8 @@
-# Psr7\Middleware\Stack [![Build Status](https://travis-ci.org/schnittstabil/psr7-middleware-stack.svg?branch=master)](https://travis-ci.org/schnittstabil/psr7-middleware-stack) [![Coverage Status](https://coveralls.io/repos/github/schnittstabil/psr7-middleware-stack/badge.svg?branch=master)](https://coveralls.io/github/schnittstabil/psr7-middleware-stack?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/?branch=master) [![Code Climate](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack/badges/gpa.svg)](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack)
+# Psr7\MiddlewareStack [![Build Status](https://travis-ci.org/schnittstabil/psr7-middleware-stack.svg?branch=master)](https://travis-ci.org/schnittstabil/psr7-middleware-stack) [![Coverage Status](https://coveralls.io/repos/github/schnittstabil/psr7-middleware-stack/badge.svg?branch=master)](https://coveralls.io/github/schnittstabil/psr7-middleware-stack?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/schnittstabil/psr7-middleware-stack/?branch=master) [![Code Climate](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack/badges/gpa.svg)](https://codeclimate.com/github/schnittstabil/psr7-middleware-stack)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/f82b6d49-fa8c-45a1-8d27-e02569fb4dab/big.png)](https://insight.sensiolabs.com/projects/f82b6d49-fa8c-45a1-8d27-e02569fb4dab)
 
-> Stack PSR-7 middlewares in a reusable way.
+> Stack PSR-7 middlewares in a reusable way :dango:
 
 
 ## Install
@@ -18,7 +18,7 @@ $ composer require schnittstabil/psr7-middleware-stack
 <?php
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
+use Schnittstabil\Psr7\MiddlewareStack\MiddlewareStack;
 
 $newMiddleware = (new MiddlewareStack())
   ->add($someMiddleware4)
@@ -60,7 +60,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr7Middlewares\Middleware;
 use Slim\App;
 use Slim\Http\Stream;
-use Schnittstabil\Psr7\Middleware\Stack as MiddlewareStack;
+use Schnittstabil\Psr7\MiddlewareStack\MiddlewareStack;
 
 // setup oscarotero/psr7-middlewares
 Middleware::setStreamFactory(function ($file, $mode) {

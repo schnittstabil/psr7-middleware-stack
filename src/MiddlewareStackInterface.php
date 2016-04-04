@@ -1,14 +1,14 @@
 <?php
 
-namespace Schnittstabil\Psr7\Middleware;
+namespace Schnittstabil\Psr7\MiddlewareStack;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Middleware stack.
+ * MiddlewareStack operations.
  */
-interface StackInterface
+interface MiddlewareStackInterface
 {
     /**
      * Push a middleware onto the top of this stack.

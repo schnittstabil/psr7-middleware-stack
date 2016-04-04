@@ -1,11 +1,11 @@
 <?php
 
-namespace Schnittstabil\Psr7\Middleware;
+namespace Schnittstabil\Psr7\MiddlewareStack;
 
 /**
  * Implentations of stack operations.
  */
-trait StackTrait
+trait MiddlewareStackTrait
 {
     protected $middlewareStack;
 
@@ -18,17 +18,17 @@ trait StackTrait
      */
     protected function push(callable $newTopMiddleware)
     {
-        $oldMiddlewareStack = $this->middlewareStack;
+        $oldStack = $this->middlewareStack;
 
-        if ($oldMiddlewareStack === null) {
+        if ($oldStack === null) {
             $this->middlewareStack = $newTopMiddleware;
 
             return $this;
         }
 
-        $this->middlewareStack = function ($request, $response, callable $next) use ($oldMiddlewareStack, $newTopMiddleware) {
-            return $newTopMiddleware($request, $response, function ($req, $res) use ($next, $oldMiddlewareStack) {
-                return $oldMiddlewareStack($req, $res, $next);
+        $this->middlewareStack = function ($request, $response, callable $next) use ($oldStack, $newTopMiddleware) {
+            return $newTopMiddleware($request, $response, function ($req, $res) use ($next, $oldStack) {
+                return $oldStack($req, $res, $next);
             });
         };
 
